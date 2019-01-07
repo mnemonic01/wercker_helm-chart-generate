@@ -1,0 +1,74 @@
+name: helm-chart-generate
+version: 0.0.2
+summary: Step to run chartify that generates helm charts
+tags:
+  - helm
+
+properties:
+# Properties to connect to Kubernetes Cluster
+- name: token
+  type: string
+  required: false
+- name: username
+  type: string
+  required: false
+- name: password
+  type: string
+  required: false
+- name: server
+  type: string
+  required: false
+- name: certificate-authority
+  type: string
+  required: false
+- name: client-certificate
+  type: string
+  required: false
+- name: client-key
+  type: string
+  required: false
+- name: insecure-skip-tls-verify
+  type: string
+  required: false
+- name: cluster-name
+  type: string
+  required: false
+- name: context-name
+  type: string
+  required: false
+
+# Properties of Chartify
+- name: chart-name
+  type: string
+- name: chart-dir
+  type: string            # Specify the location where charts will be created (default "charts")
+- name: configmaps
+  type: string       # Specify the names of configmaps(configmap@namespace) to include in chart
+- name: daemons
+  type: string          # Specify the names of daemons(daemon@namespace) to include in chart
+- name: deployments
+  type: string      # Specify the names of deployments(deployments@namespace) to include in chart
+- name: jobs
+  type: string             # Specify the names of jobs(job@namespace) to include in chart
+- name: kube-dir
+  type: string              # Specify the directory of the yaml files for Kubernetes objects
+- name: pods
+  type: string             # Specify the names of pods(pod@namespace) to include in chart
+- name: pvcs
+  type: string             # Specify the names of persistent volume claims(pvc@namespace) to include in chart
+- name: pvs
+  type: string              # Specify the names of persistent volumes(pv@namespace) to include in chart
+- name: rcs
+  type: string              # Specify the names of replication cotrollers(rc@namespace) to include in chart
+- name: replicasets
+  type: string      # Specify the names of replica sets(rs@namespace) to include in chart
+- name: secrets
+  type: string          # Specify the names of secrets(secret@namespace) to include in chart
+- name: services
+  type: string         # Specify the names of services(service@namespace) to include in chart
+- name: statefulsets
+  type: string     # Specify the names of statefulsets(statefulset@namespace) to include in chart
+- name: storageclasses
+  type: string   # Specify the names of storageclasses(storageclass@namespace) to include in chart
+- name: preserve-name
+  type: bool           # Specify if you want to preserve resources name from input yaml true/false (default: false)
