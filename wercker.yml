@@ -1,0 +1,67 @@
+box: oraclelinux:7-slim
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - script:
+        name: install envsubst
+        code: |
+            sudo yum -y update
+            sudo yum -y install gettext tar curl gzip git
+    - script:
+        name: config
+        code: |
+            export KUBERNETES_VERSION="1.11.3"
+            export KUBERNETES_SHA256="14a70ac05c00fcfd7d632fc9e7a5fbc6615ce1b370bb1a0e506a24972d461493"
+            echo "Installing version $KUBERNETES_VERSION of kubernetes"
+    - script:
+        name: fetch kubernetes archive
+        code: |
+            curl -L https://dl.k8s.io/v${KUBERNETES_VERSION}/kubernetes-client-linux-amd64.tar.gz > kubernetes-client-linux-amd64.tar.gz
+            sha256sum kubernetes-client-linux-amd64.tar.gz | grep -q "$KUBERNETES_SHA256"
+            tar xvzf kubernetes-client-linux-amd64.tar.gz
+            kubernetes/client/bin/kubectl version --client
+
+    - shellcheck:
+      files: run.sh
+
+    - script:
+          name: prepare output
+          code: cp -r "kubernetes/client/bin/kubectl" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
+
+# Take our tested application revision and its dependencies, bake it in to a
+# # Docker image, and push to OCIR.
+ push-to-OCIR:
+   steps:
+   # Push to public OCIR
+       - internal/docker-push:
+              working-dir: $WERCKER_ROOT
+              tag: $WERCKER_GIT_COMMIT
+              username: $DOCKER_USERNAME
+              password: $DOCKER_PASSWORD
+              repository: $DOCKER_REPO
+              registry: https://phx.ocir.io/v2
+
+# for now we will delete and recreate the apache bitnami on OKE
+ deploy-to-oke:
+   box:
+        id: oraclelinux:7-slim
+        cmd: /bin/sh
+   steps:
+
+    - script:
+        name: Delete release with helm
+        code: helm delete my-apache
+
+    - script:
+        name: wait to delete release
+        code: sleep 5
+
+    - script:
+        name: Deploying with helm
+        code: helm install --name my-apache bitnami/apache
+
+publish:
+  steps:
+    - internal/publish-step:
+        owner: marsaf
