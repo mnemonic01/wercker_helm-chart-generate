@@ -30,7 +30,7 @@ build:
           code: cp -r "kubernetes/client/bin/kubectl" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
 
 # Take our tested application revision and its dependencies, bake it in to a
-# # Docker image, and push to OCIR.
+# #  Docker image, and push to OCIR.
 push-to-OCIR:
   steps:
 # Push to public OCIR
