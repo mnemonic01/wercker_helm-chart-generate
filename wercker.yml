@@ -31,10 +31,10 @@ build:
 
 # Take our tested application revision and its dependencies, bake it in to a
 # # Docker image, and push to OCIR.
- push-to-OCIR:
-   steps:
+push-to-OCIR:
+  steps:
    # Push to public OCIR
-       - internal/docker-push:
+     - internal/docker-push:
               working-dir: $WERCKER_ROOT
               tag: $WERCKER_GIT_COMMIT
               username: $DOCKER_USERNAME
@@ -43,12 +43,12 @@ build:
               registry: https://phx.ocir.io/v2
 
 # for now we will delete and recreate the apache bitnami on OKE
- deploy-to-oke:
+deploy-to-oke:
    box:
         id: oraclelinux:7-slim
         cmd: /bin/sh
    steps:
-
+   
     - script:
         name: Delete release with helm
         code: helm delete my-apache
