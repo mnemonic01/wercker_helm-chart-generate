@@ -34,7 +34,7 @@ build:
     - script: 
       name: install go 
       code: | 
-        sudo yum -y install golang-go
+        sudo yum -y install golang
         
     - script:
         name: install chartify
