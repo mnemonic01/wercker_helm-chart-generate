@@ -56,6 +56,9 @@ push-to-OCIR:
 
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
+   box: 
+       id: ubuntu
+       cmd: /bin/sh
    steps:
    
      - kubectl:
