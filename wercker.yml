@@ -36,9 +36,6 @@ build:
         code: |
           go get -v github.com/appscode/chartify
           
-    - shellcheck:
-          files: run.sh
-
     - script:
           name: prepare output
           code: cp -r "kubernetes/client/bin/kubectl" "/usr/bin/envsubst" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
@@ -78,6 +75,9 @@ deploy-to-oke:
             mv linux-amd64/helm /usr/local/bin/helm
             helm version --client
           # helm init -c
+          
+    - shellcheck:
+          files: run.sh   
    
    # - script:
    #     name: Delete release with helm
