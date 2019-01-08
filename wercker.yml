@@ -77,14 +77,14 @@ deploy-to-oke:
         insecure-skip-tls-verify: true
         command: version
         
-    - script:
-        name: Delete release with helm
-        code:  |
-          $WERCKER_STEP_ROOT/helm delete my-apache
+   # - script:
+   #     name: Delete release with helm
+   #     code:  |
+   #       $WERCKER_STEP_ROOT/helm delete my-apache
 
-    - script:
-        name: wait to delete release
-        code: sleep 5
+   # - script:
+   #     name: wait to delete release
+   #     code: sleep 5
 
     - script:
         name: Deploying with helm
