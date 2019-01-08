@@ -1,6 +1,6 @@
 #!/bin/sh
 
-chartify= "$WERCKER_STEP_ROOT/go/bin/chartify"
+chartify="$WERCKER_STEP_ROOT/go/bin/chartify"
 kubectl="$WERCKER_STEP_ROOT/kubectl"
 
 display_kubectl_version() {
@@ -103,7 +103,7 @@ main() {
   #  global_args="$global_args --client-key=\"$WERCKER_HELM_CHART_GENERATE_CLIENT_KEY\""
   #fi
 
-  mkdir -p $HOME/.kube
+  mkdir -p "$HOME/.kube"
   ROOT_KUBECONFIG_PATH="/root/.kube/config"
   #$WERCKER_STEP_ROOT/envsubst < "$WERCKER_STEP_ROOT/config" > "$HOME/.kube/config"
   
@@ -111,8 +111,7 @@ main() {
      echo "Using supplied kubeconfig"
 
      # wercker maps newlines to "\n" all on a single line
-     echo "${KUBECONFIG_TEXT}" | sed 's/\\n/\
-/g' >> ${ROOT_KUBECONFIG_PATH}
+     echo "${KUBECONFIG_TEXT}" | sed 's/\\n/\/g' >> ${ROOT_KUBECONFIG_PATH}
 
   else
      echo "Generating kubeconfig"
@@ -124,7 +123,7 @@ main() {
   
   # export KUBECONFIG= $HOME/.kube/config
   info "Connecting to the Cluster as specified in kubeconfig"
-  $kubectl cluster-info --kubeconfig $HOME/.kube/config
+  $kubectl cluster-info --kubeconfig "$HOME/.kube/config"
 
   # Global args
   #chartify_args=
@@ -211,8 +210,8 @@ main() {
   #      chartify_args="$chartify_args --preserve-name=\"WERCKER_HELM_CHART_PRESERVE_NAME\""
   #fi
 
-  info "executing chartify command"
-  $chartify $chartify_cmd $chartify_args
+  #info "executing chartify command"
+  #$chartify $chartify_cmd $chartify_args
   
   echo  eval "$kubectl" "$global_args" "$raw_global_args" "$cmd" "$args" "$raw_args"
   eval "$kubectl" "$global_args" "$raw_global_args" "$cmd" "$args" "$raw_args"
