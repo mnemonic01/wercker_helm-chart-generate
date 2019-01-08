@@ -56,7 +56,6 @@ push-to-OCIR:
 
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
-   
    steps:
    
      - script:
@@ -68,14 +67,14 @@ deploy-to-oke:
             mv linux-amd64/helm /usr/local/bin/helm
             helm version --client
    
-      - kubectl:
+     - kubectl:
             name: Setup K8s environment
             server: $OKE_MASTER
             token: $OKE_TOKEN
             insecure-skip-tls-verify: true
             command: version 
       
-      - shellcheck:
+     - shellcheck:
            files: run.sh   
    
       # - script:
@@ -87,7 +86,7 @@ deploy-to-oke:
       #     name: wait to delete release
       #     code: sleep 5
 
-      - script:
+     - script:
          name: Deploying with helm
          code: |
           #ls -ld $WERCKER_STEP_ROOT
