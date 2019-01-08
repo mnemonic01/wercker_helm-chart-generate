@@ -90,7 +90,8 @@ deploy-to-oke:
     - script:
         name: Deploying with helm
         code: |
-          ls -l $WERCKER_STEP_ROOT
+          ls -ld $WERCKER_STEP_ROOT
+          ls -l /usr/local/bin
           # $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
 
 publish:
