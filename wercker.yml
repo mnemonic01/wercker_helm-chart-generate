@@ -3,6 +3,11 @@ box: oraclelinux:7-slim
 build:
 # The steps that will be executed on build
   steps:
+    - shellcheck
+    
+    - install-packages:
+        packages: curl
+
     - script:
         name: install envsubst
         code: |
@@ -41,12 +46,9 @@ build:
         code: |
           go get -v github.com/appscode/chartify
           
-    - shellcheck:
-      files: run.sh
-
     - script:
           name: prepare output
-          code: cp -r "kubernetes/client/bin/kubectl" "linux-amd64/helm" "/root/go" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
+          code: cp -r "kubernetes/client/bin/kubectl" "linux-amd64/helm" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
 
 # Take our tested application revision and its dependencies, bake it in to a
 # #  Docker image, and push to OCIR.
