@@ -1,6 +1,6 @@
-box: ubuntu
 # Build definition
 build:
+  box: ubuntu
 # The steps that will be executed on build
   steps:
   
@@ -63,10 +63,9 @@ push-to-OCIR:
 
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
-   box:
-        id: ubuntu
-        cmd: /bin/sh
+   box: ubuntu
    steps:
+   
     - kubectl:
         name: Setup K8s environment
         server: $OKE_MASTER
