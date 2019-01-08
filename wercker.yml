@@ -68,8 +68,7 @@ deploy-to-oke:
             tar xvzf helm-v2.11.0-linux-amd64.tar.gz
             mv linux-amd64/helm /usr/local/bin/helm
             helm version --client
-            # helm init -c
-      
+                 
       - kubectl:
             name: Setup K8s environment
             server: $OKE_MASTER
