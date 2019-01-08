@@ -1,4 +1,4 @@
-box: oraclelinux:7-slim
+box: ubuntu
 # Build definition
 build:
 # The steps that will be executed on build
@@ -11,8 +11,8 @@ build:
     - script:
         name: install envsubst
         code: |
-            sudo yum -y update
-            sudo yum -y install gettext tar curl gzip git
+            sudo apt --assume-yes update && sudo apt --assume-yes upgrade
+            sudo apt --assume-yes install gettext tar curl gzip git
             
     - script:
         name: config
@@ -35,7 +35,19 @@ build:
             curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz > helm-v2.11.0-linux-amd64.tar.gz
             tar xvzf helm-v2.11.0-linux-amd64.tar.gz
             linux-amd64/helm version --client
-            
+    - script: 
+      name: install go 
+      code: | 
+        sudo apt-get --assume-yes install golang-go
+        
+    - script:
+        name: install chartify
+        code: |
+          go get -v github.com/appscode/chartify
+          
+    - shellcheck:
+          files: run.sh
+
     - script:
           name: prepare output
           code: cp -r "kubernetes/client/bin/kubectl" "linux-amd64/helm" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
@@ -56,7 +68,7 @@ push-to-OCIR:
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
    box:
-        id: oraclelinux:7-slim
+        id: ubuntu
         cmd: /bin/sh
    steps:
     - kubectl:
