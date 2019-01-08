@@ -57,6 +57,7 @@ push-to-OCIR:
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
    box: ubuntu
+   
    steps:
    
     - kubectl:
@@ -88,9 +89,9 @@ deploy-to-oke:
    #     name: wait to delete release
    #     code: sleep 5
 
-    - script:
-        name: Deploying with helm
-        code: |
+      - script:
+         name: Deploying with helm
+         code: |
           #ls -ld $WERCKER_STEP_ROOT
           #ls -l /usr/local/bin
           $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
