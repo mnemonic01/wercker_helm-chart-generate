@@ -71,11 +71,11 @@ deploy-to-oke:
             # helm init -c
       
       - kubectl:
-        name: Setup K8s environment
-        server: $OKE_MASTER
-        token: $OKE_TOKEN
-        insecure-skip-tls-verify: true
-        command: version 
+            name: Setup K8s environment
+            server: $OKE_MASTER
+            token: $OKE_TOKEN
+            insecure-skip-tls-verify: true
+            command: version 
       
       - shellcheck:
            files: run.sh   
