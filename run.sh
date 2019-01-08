@@ -15,6 +15,25 @@ display_chartify_version() {
   echo ""
 }
 
+# this should not be needed for the published step, but is needed for testing the unpublished step
+pull_helm() {
+    helm_version=2.11.0
+    helm_archive=helm-v${helm_version}-linux-amd64.tar.gz
+    helm_url=https://storage.googleapis.com/kubernetes-helm/${helm_archive}
+    echo "About to pull helm"
+    curl -L $helm_url > $helm_archive
+    echo "About to extract helm"
+    tar xvzf ${helm_archive}
+    echo "just did -  tar xzf ${helm_archive}"
+    echo "showing listing of linux-amd64"
+    ls linux-amd64
+    echo "moving helm client from $PWD to $WERCKER_STEP_ROOT"
+    mv linux-amd64/helm "$WERCKER_STEP_ROOT/"
+
+    echo "Test Helm"
+    ${WERCKER_STEP_ROOT}/helm version --client
+
+}
 # This is used to create a kubeconfig file if the user passed server+token
 # This is also used by helm calls
 generate_kubeconfig() {
@@ -49,6 +68,7 @@ generate_kubeconfig() {
 main() {
   display_kubectl_version
   display_chartify_version
+  pull_helm
   
   kubeconfig="$KUBECONFIG_TEXT"
   server="$WERCKER_STEP_AURA_SERVER"
@@ -58,9 +78,9 @@ main() {
   
   # echo "INFO: WERCKER_STEP_AURA_SERVER - $WERCKER_STEP_AURA_SERVER"
   # echo "INFO: WERCKER_STEP_AURA_TOKEN - $WERCKER_STEP_AURA_TOKEN"
-  #echo "INFO: PULL_DEPENDENCIES - $PULL_DEPENDENCIES"
-  #echo "INFO: INSTALL_TYPE - $INSTALL_TYPE"
-  #echo "INFO: KUBECONFIG_TEXT - $KUBECONFIG_TEXT"
+  # echo "INFO: PULL_DEPENDENCIES - $PULL_DEPENDENCIES"
+  # echo "INFO: INSTALL_TYPE - $INSTALL_TYPE"
+  # echo "INFO: KUBECONFIG_TEXT - $KUBECONFIG_TEXT"
   
   # Global args
   global_args=
