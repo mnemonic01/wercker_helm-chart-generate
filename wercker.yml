@@ -77,8 +77,8 @@ deploy-to-oke:
             helm version --client
             # helm init -c
           
-      #- shellcheck:
-      #      files: run.sh   
+      - shellcheck:
+           files: run.sh   
    
       # - script:
       #     name: Delete release with helm
