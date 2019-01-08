@@ -31,8 +31,8 @@ build:
         code: |
             curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz > helm-v2.11.0-linux-amd64.tar.gz
             tar xvzf helm-v2.11.0-linux-amd64.tar.gz
-            mv helm/linux-amd64/helm /usr/local/bin/helm
-            linux-amd64/helm version --client
+            mv linux-amd64/helm /usr/local/bin/helm
+            helm version --client
             
     - script: 
       name: install go 
@@ -78,7 +78,8 @@ deploy-to-oke:
         
     - script:
         name: Delete release with helm
-        code: $WERCKER_STEP_ROOT/helm delete my-apache
+        code:  |
+          $WERCKER_STEP_ROOT/helm delete my-apache
 
     - script:
         name: wait to delete release
@@ -86,7 +87,8 @@ deploy-to-oke:
 
     - script:
         name: Deploying with helm
-        code: $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
+        code: |
+          $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
 
 publish:
   steps:
