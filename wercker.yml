@@ -58,6 +58,12 @@ push-to-OCIR:
 deploy-to-oke:
    steps:
    
+     - kubectl:
+            name: Setup K8s environment
+            server: $OKE_MASTER
+            token: $OKE_TOKEN
+            insecure-skip-tls-verify: true
+            command: version 
      - script:
         name: fetch helm archive
         code: |
@@ -66,14 +72,7 @@ deploy-to-oke:
             tar xvzf helm-v2.11.0-linux-amd64.tar.gz
             mv linux-amd64/helm /usr/local/bin/helm
             helm version --client
-   
-     - kubectl:
-            name: Setup K8s environment
-            server: $OKE_MASTER
-            token: $OKE_TOKEN
-            insecure-skip-tls-verify: true
-            command: version 
-      
+            
      - shellcheck:
            files: run.sh   
    
