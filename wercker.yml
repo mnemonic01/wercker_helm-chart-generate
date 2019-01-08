@@ -3,11 +3,7 @@ box: ubuntu
 build:
 # The steps that will be executed on build
   steps:
-    - shellcheck
-    
-    - install-packages:
-        packages: curl
-
+  
     - script:
         name: install envsubst
         code: |
