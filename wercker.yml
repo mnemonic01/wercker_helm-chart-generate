@@ -36,16 +36,6 @@ build:
             tar xvzf helm-v2.11.0-linux-amd64.tar.gz
             linux-amd64/helm version --client
             
-    - script: 
-      name: install go 
-      code: | 
-        sudo yum -y install golang
-        
-    - script:
-        name: install chartify
-        code: |
-          go get -v github.com/appscode/chartify
-          
     - script:
           name: prepare output
           code: cp -r "kubernetes/client/bin/kubectl" "linux-amd64/helm" "LICENSE" "README.md" "run.sh" "wercker.yml" "step.yml" "$WERCKER_OUTPUT_DIR"
