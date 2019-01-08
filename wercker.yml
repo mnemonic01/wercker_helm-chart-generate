@@ -74,17 +74,23 @@ deploy-to-oke:
         insecure-skip-tls-verify: true
         command: version
         
-    - script:
+    - helm:
         name: Delete release with helm
-        code: helm delete my-apache
+        server: $OKE_MASTER
+        token: $OKE_TOKEN
+        insecure-skip-tls-verify: true
+        command: delete my-apache
 
     - script:
         name: wait to delete release
         code: sleep 5
 
-    - script:
+    - helm:
         name: Deploying with helm
-        code: helm install --name my-apache bitnami/apache
+        server: $OKE_MASTER
+        token: $OKE_TOKEN
+        insecure-skip-tls-verify: true
+        command: install --name my-apache bitnami/apache
 
 publish:
   steps:
