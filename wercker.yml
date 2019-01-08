@@ -4,7 +4,9 @@ build:
   
   # The steps that will be executed on build
   steps:
-  
+    - shellcheck:
+        files: run.sh
+        
     - script:
         name: install envsubst
         code: |
@@ -56,9 +58,8 @@ push-to-OCIR:
 
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
-   box: 
-       id: ubuntu
-       cmd: /bin/sh
+   box: ubuntu
+   
    steps:
    
      - kubectl:
