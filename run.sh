@@ -176,9 +176,9 @@ fi
   #  global_args="$global_args --client-key=\"$WERCKER_HELM_CHART_GENERATE_CLIENT_KEY\""
   #fi
 
-  mkdir -p "$HOME/.kube"
+  #mkdir -p "$HOME/.kube"
   ROOT_KUBECONFIG_PATH="/root/.kube/config"
-  #$WERCKER_STEP_ROOT/envsubst < "$WERCKER_STEP_ROOT/config" > "$HOME/.kube/config"
+  $WERCKER_STEP_ROOT/envsubst < "$WERCKER_STEP_ROOT/config" > "$HOME/.kube/config"
   
   if [ ! "${KUBECONFIG_TEXT}" = "" ] ; then
      echo "Using supplied kubeconfig"
