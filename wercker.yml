@@ -68,15 +68,11 @@ deploy-to-oke:
             token: $OKE_TOKEN
             insecure-skip-tls-verify: true
             command: version 
+            
      - script:
         name: fetch helm archive
         code: |
-             helm init --client-only
-             #       sudo apt-get --assume-yes install curl
-             #       mkdir -p helm
-             #       curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz > helm-v2.11.0-linux-amd64.tar.gz
-             #       tar xvzf helm-v2.11.0-linux-amd64.tar.gz
-             #       mv linux-amd64/helm /usr/local/bin/helm
+             $WERCKER_STEP_ROOT/helm init --client-only
              
 
       #- shellcheck:
@@ -94,9 +90,7 @@ deploy-to-oke:
      - script:
          name: Deploying with helm
          code: |
-          #ls -ld $WERCKER_STEP_ROOT
-          #ls -l /usr/local/bin
-          $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
+              $WERCKER_STEP_ROOT/helm install --name my-apache bitnami/apache
 
 publish:
   steps:
