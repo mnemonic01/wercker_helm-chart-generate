@@ -48,7 +48,6 @@ push-to-OCIR:
   steps:
      # Push to public OCIR
      - internal/docker-push:
-              #cmd: /pipeline/source/run.sh
               working-dir: $WERCKER_ROOT
               tag: $WERCKER_GIT_COMMIT
               username: $DOCKER_USERNAME
