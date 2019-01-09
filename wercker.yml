@@ -58,7 +58,7 @@ push-to-OCIR:
 
 # for now we will delete and recreate the apache bitnami on OKE
 deploy-to-oke:
-   box: ubuntu
+   box: lachlanevenson/k8s-helm
    
    steps:
    
@@ -71,12 +71,12 @@ deploy-to-oke:
      - script:
         name: fetch helm archive
         code: |
-            sudo apt-get --assume-yes install curl
-            mkdir -p helm
-            curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz > helm-v2.11.0-linux-amd64.tar.gz
-            tar xvzf helm-v2.11.0-linux-amd64.tar.gz
-            mv linux-amd64/helm /usr/local/bin/helm
-            helm version --client
+     #       sudo apt-get --assume-yes install curl
+     #       mkdir -p helm
+     #       curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz > helm-v2.11.0-linux-amd64.tar.gz
+     #       tar xvzf helm-v2.11.0-linux-amd64.tar.gz
+     #       mv linux-amd64/helm /usr/local/bin/helm
+             helm init --client-only
             
       #- shellcheck:
       #      files: run.sh   
