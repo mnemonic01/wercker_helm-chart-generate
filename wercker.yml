@@ -36,7 +36,7 @@ build:
     - script:
         name: install chartify
         code: |
-          go get -v github.com/appscode/chartify
+          go get -u kubepack.dev/chartify
           
     - script:
           name: prepare output
